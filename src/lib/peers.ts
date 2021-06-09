@@ -67,19 +67,21 @@ export default class Peers {
           callback(callbackMessage);
         } else {
           Logger.logger(logTag).info('room not found, create...');
-          const uuid = Uuid.v4();
-          const newRoom = new Room(uuid);
-          Logger.logger(logTag).info('room created, room id:', uuid);
+          const newRoom = new Room(message.data.roomId);
+          Logger.logger(logTag).info(
+            'room created, room id:',
+            message.data.roomId
+          );
           newRoom.join(socket, message.data.userId);
           this.rooms.push(newRoom);
           const roomCreatedMessage: RoomInfoMessage = {
             data: {
-              roomId: uuid,
+              roomId: message.data.roomId,
               userId: message.data.userId,
             },
           };
 
-          socket.join(uuid);
+          socket.join(message.data.roomId);
           callback(roomCreatedMessage);
         }
       });
