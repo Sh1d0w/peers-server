@@ -5,11 +5,13 @@ export default class Participant {
     private socket;
     private isAudioMute;
     private isVideoMute;
+    private userId;
     Socket: () => SocketIo.Socket;
     IsAudioMute: () => boolean;
     IsVideoMute: () => boolean;
     Id: () => string;
+    UserId: () => string | null;
     MediaStatus: () => MediaStatusMessage;
-    constructor(id: string, socket: SocketIo.Socket);
+    constructor(id: string, socket: SocketIo.Socket, userId: string);
     UpdateMediaStatus: (isAudioMute: boolean, isVideoMute: boolean) => void;
 }

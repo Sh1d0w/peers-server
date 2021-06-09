@@ -12,6 +12,7 @@ interface Transaction {
 interface SignalingMessage {
   data: {
     id: Transaction;
+    userId: string;
     sdp: string;
   };
 }
@@ -19,19 +20,28 @@ interface SignalingMessage {
 interface CandidateMessage {
   data: {
     id: Transaction;
+    userId: string;
     candidate: string;
+  };
+}
+
+interface UserInfoMessage {
+  data: {
+    userId: string;
   };
 }
 
 interface RoomInfoMessage {
   data: {
     roomId: string;
+    userId: string;
   };
 }
 
 interface MediaStatusMessage {
   data: {
     id: string;
+    userId: string | null;
     isAudioMute: boolean;
     isVideoMute: boolean;
   };
@@ -50,4 +60,5 @@ export {
   RoomInfoMessage,
   MediaStatusMessage,
   RemoteDisconnectedMessage,
+  UserInfoMessage,
 };

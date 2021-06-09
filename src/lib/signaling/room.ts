@@ -14,8 +14,8 @@ export default class Room {
     this.id = id;
   }
 
-  join(socket: SocketIO.Socket) {
-    this.participants.push(new Participant(socket.id, socket));
+  join(socket: SocketIO.Socket, userId: string) {
+    this.participants.push(new Participant(socket.id, socket, userId));
   }
 
   leave(socket: SocketIO.Socket) {

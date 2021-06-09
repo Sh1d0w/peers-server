@@ -10,6 +10,8 @@ export default class Participant {
 
   private isVideoMute = false;
 
+  private userId: string | null = null;
+
   public Socket = () => this.socket;
 
   public IsAudioMute = () => this.isAudioMute;
@@ -18,10 +20,13 @@ export default class Participant {
 
   public Id = () => this.id;
 
+  public UserId = () => this.userId;
+
   public MediaStatus = () => {
     const message: MediaStatusMessage = {
       data: {
         id: this.id,
+        userId: this.userId,
         isAudioMute: this.isAudioMute,
         isVideoMute: this.isVideoMute,
       },
@@ -29,9 +34,10 @@ export default class Participant {
     return message;
   };
 
-  constructor(id: string, socket: SocketIo.Socket) {
+  constructor(id: string, socket: SocketIo.Socket, userId: string) {
     this.id = id;
     this.socket = socket;
+    this.userId = userId;
   }
 
   public UpdateMediaStatus = (isAudioMute: boolean, isVideoMute: boolean) => {

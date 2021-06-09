@@ -6,6 +6,7 @@ import {
   SignalingMessage,
   CandidateMessage,
   RoomInfoMessage,
+  UserInfoMessage,
   MediaStatusMessage,
   RemoteDisconnectedMessage,
 } from './data/signaling_data';
@@ -31,14 +32,15 @@ export default class Peers {
     this.socketIo.on('connection', (socket) => {
       // Recieves
       // handle join room
-      socket.on('createRoom', (_, callback) => {
+      socket.on('createRoom', (m: UserInfoMessage, callback) => {
         const uuid = Uuid.v4();
         const room = new Room(uuid);
-        room.join(socket);
+        room.join(socket, m.data.userId);
         this.rooms.push(room);
         const message: RoomInfoMessage = {
           data: {
             roomId: uuid,
+            userId: m.data.userId,
           },
         };
 
@@ -55,10 +57,11 @@ export default class Peers {
         if (room !== undefined) {
           Logger.logger(logTag).info('room found, join to:', room.id);
 
-          room.join(socket);
+          room.join(socket, message.data.userId);
           const callbackMessage: RoomInfoMessage = {
             data: {
               roomId: room.id,
+              userId: message.data.userId,
             },
           };
           callback(callbackMessage);
@@ -67,11 +70,12 @@ export default class Peers {
           const uuid = Uuid.v4();
           const newRoom = new Room(uuid);
           Logger.logger(logTag).info('room created, room id:', uuid);
-          newRoom.join(socket);
+          newRoom.join(socket, message.data.userId);
           this.rooms.push(newRoom);
           const roomCreatedMessage: RoomInfoMessage = {
             data: {
               roomId: uuid,
+              userId: message.data.userId,
             },
           };
 

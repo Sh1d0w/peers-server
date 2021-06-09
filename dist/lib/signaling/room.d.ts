@@ -7,7 +7,7 @@ export default class Room {
     Sockets: () => import("socket.io").Socket[];
     Participants: () => Participant[];
     constructor(id: string);
-    join(socket: SocketIO.Socket): void;
+    join(socket: SocketIO.Socket, userId: string): void;
     leave(socket: SocketIO.Socket): void;
     updateMediaStatus(message: MediaStatusMessage): void;
     notifyMediaStatusTo(id: string): void;
