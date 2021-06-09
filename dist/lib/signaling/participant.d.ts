@@ -10,7 +10,7 @@ export default class Participant {
     IsAudioMute: () => boolean;
     IsVideoMute: () => boolean;
     Id: () => string;
-    UserId: () => string | null;
+    UserId: () => string;
     MediaStatus: () => MediaStatusMessage;
     constructor(id: string, socket: SocketIo.Socket, userId: string);
     UpdateMediaStatus: (isAudioMute: boolean, isVideoMute: boolean) => void;

@@ -1,6 +1,9 @@
 interface CreateOfferMessage {
     data: {
-        ids: string[];
+        users: Array<{
+            id: string;
+            userId: string;
+        }>;
     };
 }
 interface Transaction {

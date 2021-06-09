@@ -1,12 +1,12 @@
 import { CreateOfferMessage } from '../data/signaling_data';
 
 export default class MessageBuilder {
-  static createOfferMessage: (ids: string[]) => CreateOfferMessage = (
-    ids: string[]
-  ) => {
+  static createOfferMessage: (
+    users: Array<{ id: string; userId: string }>
+  ) => CreateOfferMessage = (users: Array<{ id: string; userId: string }>) => {
     const message: CreateOfferMessage = {
       data: {
-        ids,
+        users,
       },
     };
     return message;

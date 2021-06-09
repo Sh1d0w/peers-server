@@ -94,10 +94,17 @@ export default class Peers {
           Logger.logger(logTag).info('room not found skip... from', socket.id);
           return;
         }
-        const others = room.Sockets().filter((x) => x.id !== socket.id);
+        const others = room
+          .Participants()
+          .filter((x) => x.Socket().id !== socket.id);
         socket.emit(
           'call',
-          MessageBuilder.createOfferMessage(others.map((x) => x.id))
+          MessageBuilder.createOfferMessage(
+            others.map((x) => ({
+              id: x.Socket().id,
+              userId: x.UserId(),
+            }))
+          )
         );
         room.notifyMediaStatusTo(socket.id);
       });

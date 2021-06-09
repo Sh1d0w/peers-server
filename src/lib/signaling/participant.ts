@@ -10,7 +10,7 @@ export default class Participant {
 
   private isVideoMute = false;
 
-  private userId: string | null = null;
+  private userId: string;
 
   public Socket = () => this.socket;
 
